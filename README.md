@@ -170,6 +170,31 @@ aicommits config set OPENAI_KEY=<your-api-key> generate=3 locale=en
 Required
 
 The OpenAI API key. You can retrieve it from [OpenAI API Keys page](https://platform.openai.com/account/api-keys).
+#### BASE_URL
+
+Default: `https://api.openai.com/v1`
+
+The base URL for the OpenAI API.
+
+<!-- 如果你需要修改你的ai模型，可以直接修改BASE_URL -->
+
+If you need to modify your AI model, you can directly modify BASE_URL.
+
+<!-- 例如：你想使用 bigmodel 的模型，可以这样修改 -->
+
+For example: If you want to use the model of bigmodel, you can modify it like this
+
+```
+aicommits config set BASE_URL=https://open.bigmodel.cn/api/paas/v4
+```
+
+<!-- 切记：你还需要修改你的 model  -->
+
+Remember: You still need to modify your model.
+
+<!-- 只要你的模型兼容 OpenAI 的模型接口，就可以使用 -->
+
+As long as your model is compatible with the OpenAI model interface, it can be used.
 
 #### locale
 

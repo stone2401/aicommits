@@ -66,6 +66,7 @@ export default async (
 		try {
 			messages = await generateCommitMessage(
 				config.OPENAI_KEY,
+				config.BASE_URL,
 				config.model,
 				config.locale,
 				staged.diff,

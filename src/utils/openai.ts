@@ -68,14 +68,19 @@ const httpsPost = async (
 	});
 
 const createChatCompletion = async (
+	url: string,
 	apiKey: string,
 	json: CreateChatCompletionRequest,
 	timeout: number,
 	proxy?: string
 ) => {
+	// open.bigmodel.cn/api/paas/v4 通过第一个 / 切割，切分为 hostname = open.bigmodel.cn path = /api/paas/v4
+	let hostname = url.split('/')[0];
+	// path = /api/paas/v4
+	let path = url.slice(url.indexOf(hostname) + hostname.length);
 	const { response, data } = await httpsPost(
-		'api.openai.com',
-		'/v1/chat/completions',
+		hostname,
+		path + '/chat/completions',
 		{
 			Authorization: `Bearer ${apiKey}`,
 		},
@@ -132,6 +137,7 @@ const deduplicateMessages = (array: string[]) => Array.from(new Set(array));
 
 export const generateCommitMessage = async (
 	apiKey: string,
+	url: string,
 	model: TiktokenModel,
 	locale: string,
 	diff: string,
@@ -143,6 +149,7 @@ export const generateCommitMessage = async (
 ) => {
 	try {
 		const completion = await createChatCompletion(
+			url,
 			apiKey,
 			{
 				model,

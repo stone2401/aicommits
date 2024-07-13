@@ -27,10 +27,22 @@ const configParsers = {
 				'Please set your OpenAI API key via `aicommits config set OPENAI_KEY=<your token>`'
 			);
 		}
-		parseAssert('OPENAI_KEY', key.startsWith('sk-'), 'Must start with "sk-"');
-		// Key can range from 43~51 characters. There's no spec to assert this.
+		// 这里为了适配openapi以外的模型
+		parseAssert('OPENAI_KEY', true, 'Must start with "sk-"');
 
 		return key;
+	},
+	BASE_URL(url?: string) {
+		if (!url) {
+			return 'https://api.openai.com/v1';
+		}
+		// 如果存在http与https前缀，就去掉前缀
+		if (/^https?:\/\//.test(url)) {
+			url = url.replace(/^https?:\/\//, '');
+		}
+
+		parseAssert('BASE_URL', true, 'Must be a valid URL');
+		return url;
 	},
 	locale(locale?: string) {
 		if (!locale) {
